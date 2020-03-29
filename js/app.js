@@ -22,6 +22,7 @@ Enemy.prototype.update = function (dt) {
   else {
     this.x = -2;
   }
+  //check collision
   if (player.x >= this.x - 30
     && player.x <= this.x + 30
     && player.y >= this.y - 30
@@ -70,8 +71,18 @@ player.prototype.update = function () {
   //when player will reach to water after crosssing all the hurdles it will be reset 
   if (this.y < 20) {
     this.reset();
+    Score.update();
   }
 };
+
+var Score = function () {
+  this.Score = 0;
+}
+
+Score.prototype.update = function () {
+  this.Score += 1;
+  document.getElementById('score').innerHTML = this.Score;
+}
 
 player.prototype.handleInput = function (e) {
   this.key = e;
@@ -82,6 +93,7 @@ player.prototype.handleInput = function (e) {
 var allEnemies = [new Enemy(-2, 50), new Enemy(-2, 100), new Enemy(-2, 150), new Enemy(-2, 200)];
 
 var player = new player();
+var Score = new Score();
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function (e) {
